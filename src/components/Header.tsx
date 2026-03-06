@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Button from './Button'; // Assuming Button component is in the same directory or adjust path
+import Button from './Button';
 
 interface HeaderProps {
   currentUser?: { name: string } | null;
@@ -9,16 +9,20 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ currentUser, onLogout }) => {
   return (
-    <header className="bg-gradient-to-r from-sky-600 to-cyan-500 text-white p-4 sm:p-6 shadow-lg">
+    <header className="bg-gradient-to-l from-brand-700 to-brand-900 text-white py-4 px-4 sm:px-6 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">סימולטור שאו"ל – הכנה מבוססת אישיות</h1>
-          <p className="text-xs sm:text-sm opacity-90 mt-1 hidden sm:block">הכלי שלך להבנה עמוקה והצלחה במבחן האישיות</p>
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight">
+            סימולטור שאו"ל
+          </h1>
+          <p className="text-xs sm:text-sm text-brand-200 mt-0.5 hidden sm:block">
+            הכנה מבוססת אישיות למבחן הקבלה
+          </p>
         </div>
         {currentUser && onLogout && (
-          <div className="flex items-center space-x-3 rtl:space-x-reverse">
-            <span className="text-sm hidden sm:inline">שלום, {currentUser.name}</span>
-            <Button onClick={onLogout} variant="secondary" size="sm" className="!bg-sky-100 !text-sky-700 hover:!bg-sky-200">
+          <div className="flex items-center gap-3">
+            <span className="text-sm text-brand-200 hidden sm:inline">{currentUser.name}</span>
+            <Button onClick={onLogout} variant="ghost" size="sm" className="!text-brand-200 hover:!text-white hover:!bg-brand-700/50">
               התנתק
             </Button>
           </div>

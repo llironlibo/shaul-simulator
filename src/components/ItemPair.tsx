@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Statement, PersonalityTrait } from '../types'; // Added PersonalityTrait
+import { Statement, PersonalityTrait } from '../types';
 
 interface ItemPairProps {
   statementA: Statement;
@@ -9,37 +9,51 @@ interface ItemPairProps {
   disabled?: boolean;
 }
 
-const ItemPair: React.FC<ItemPairProps> = ({ statementA, statementB, onSelect, disabled }) => {
-  const handleSelect = (statement: Statement) => {
-    if (!disabled) {
-      onSelect(statement.id, statement.trait);
-    }
-  };
+const ChoiceCard: React.FC<{
+  statement: Statement;
+  onSelect: () => void;
+  disabled?: boolean;
+  label: string;
+}> = ({ statement, onSelect, disabled, label }) => (
+  <button
+    type="button"
+    onClick={onSelect}
+    disabled={disabled}
+    className={`w-full text-right p-5 sm:p-6 rounded-xl border-2 transition-all duration-200
+      ${disabled
+        ? 'bg-slate-50 border-slate-200 opacity-60 cursor-not-allowed'
+        : 'bg-white border-slate-200 hover:border-brand-400 hover:shadow-md hover:bg-brand-50/30 active:scale-[0.98] cursor-pointer'
+      }`}
+    aria-label={`${label}: ${statement.text}`}
+  >
+    <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{label}</span>
+    <p className="text-lg text-slate-800 mt-1 leading-relaxed">{statement.text}</p>
+  </button>
+);
 
+const ItemPair: React.FC<ItemPairProps> = ({ statementA, statementB, onSelect, disabled }) => {
   return (
-    <div className="space-y-6 w-full max-w-2xl">
-      <p className="text-lg text-slate-700 font-medium mb-4 text-center">בחר את המשפט המתאר אותך טוב יותר:</p>
-      <div
-        className={`p-6 border-2 rounded-xl shadow-lg cursor-pointer transition-all duration-200 ease-in-out 
-                    ${disabled ? 'bg-slate-100 opacity-70 cursor-not-allowed' : 'bg-white hover:border-blue-500 hover:shadow-blue-200 hover:shadow-md'}`}
-        onClick={() => handleSelect(statementA)}
-        role="button"
-        tabIndex={disabled ? -1 : 0}
-        aria-label={`בחר: ${statementA.text}`}
-      >
-        <p className="text-xl text-slate-800">{statementA.text}</p>
+    <div className="space-y-4 w-full">
+      <p className="text-base text-slate-500 font-medium text-center mb-2">
+        בחר את המשפט שמתאר אותך טוב יותר:
+      </p>
+      <ChoiceCard
+        statement={statementA}
+        onSelect={() => !disabled && onSelect(statementA.id, statementA.trait)}
+        disabled={disabled}
+        label="א"
+      />
+      <div className="flex items-center gap-3 px-4">
+        <div className="flex-1 h-px bg-slate-200" />
+        <span className="text-sm text-slate-400 font-medium">או</span>
+        <div className="flex-1 h-px bg-slate-200" />
       </div>
-      <div className="text-center text-slate-500 font-semibold my-2">או</div>
-      <div
-        className={`p-6 border-2 rounded-xl shadow-lg cursor-pointer transition-all duration-200 ease-in-out 
-                   ${disabled ? 'bg-slate-100 opacity-70 cursor-not-allowed' : 'bg-white hover:border-blue-500 hover:shadow-blue-200 hover:shadow-md'}`}
-        onClick={() => handleSelect(statementB)}
-        role="button"
-        tabIndex={disabled ? -1 : 0}
-        aria-label={`בחר: ${statementB.text}`}
-      >
-        <p className="text-xl text-slate-800">{statementB.text}</p>
-      </div>
+      <ChoiceCard
+        statement={statementB}
+        onSelect={() => !disabled && onSelect(statementB.id, statementB.trait)}
+        disabled={disabled}
+        label="ב"
+      />
     </div>
   );
 };

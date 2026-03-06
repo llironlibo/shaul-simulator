@@ -34,33 +34,29 @@ const constructPrompt = (profile: PersonalityProfile): string => {
     profileScores[trait] = profile[trait]; // Using raw scores as direct relative strength indicators
   }
 
-  return `אתה עוזר וירטואלי עבור כלי הערכת אישיות למועמדים ללימודי רפואה.
-המשתמש השלים סימולציה המבוססת על מודל חמש התכונות הגדולות. הציונים היחסיים שלו (ככל שהציון גבוה יותר, כך התכונה בולטת יותר בפרופיל שלו) הם:
-מצפוניות: ${profileScores[PersonalityTrait.Conscientiousness]}
-נועם הליכות: ${profileScores[PersonalityTrait.Agreeableness]}
-יציבות רגשית: ${profileScores[PersonalityTrait.EmotionalStability]}
-מוחצנות: ${profileScores[PersonalityTrait.Extraversion]}
-פתיחות מחשבתית: ${profileScores[PersonalityTrait.Openness]}
+  return `אתה יועץ מומחה להכנה למבחן שאו"ל (שאלון אישיות למועמדים לרפואת שיניים).
 
-עבור כל אחת מחמש התכונות, ספק בבקשה:
-1.  הסבר קצר ומעודד בעברית מה משמעות רמת הציון (למשל, גבוהה, בינונית, נמוכה) עבור תכונה ספציפית זו.
-2.  כיצד תכונה זו (ורמתה אצל המשתמש) רלוונטית בהקשר של מקצוע הרפואה (רופא/רופאת שיניים) בעברית.
-3.  עצה מעשית אחת או שאלת רפלקציה למשתמש המבוססת על ציונו בתכונה זו, כדי לעזור לו להתכונן למבחן שאו"ל ולקריירה הרפואית שלו, בעברית.
+המועמד סיים סימולציה של מבחן אישיות Big Five. הציונים (0-12, ככל שגבוה יותר - בולט יותר):
+- מצפוניות: ${profileScores[PersonalityTrait.Conscientiousness]}
+- נועם הליכות: ${profileScores[PersonalityTrait.Agreeableness]}
+- יציבות רגשית: ${profileScores[PersonalityTrait.EmotionalStability]}
+- מוחצנות: ${profileScores[PersonalityTrait.Extraversion]}
+- פתיחות מחשבתית: ${profileScores[PersonalityTrait.Openness]}
 
-שמור על שפה תומכת ובונה.
-הפלט צריך להיות אובייקט JSON עם מפתחות עבור כל תכונה (למשל, "מצפוניות", "נועם הליכות" וכו' כפי שהם מופיעים ב-enum PersonalityTrait), כאשר כל תכונה מכילה תת-מפתחות: "explanation", "medicalRelevance", ו-"advice".
+הקשר חשוב: המבחן נערך כחלק מתהליך קבלה לרפואת שיניים. המועמדים נבחנים על ידי בוחנים חיצוניים (סטודנטים לרפואה ורופאי שיניים). הציון הסופי נע בין 150-250.
 
-דוגמה למבנה JSON עבור תכונה אחת (אם נועם הליכות גבוה):
-\`\`\`json
-{
-  "נועם הליכות": {
-    "explanation": "ציון גבוה בנועם הליכות מצביע על נטייה טבעית לאמפתיה, שיתוף פעולה ודאגה לזולת. אתה כנראה אדם חם ואכפתי.",
-    "medicalRelevance": "ברפואה, נועם הליכות חיוני לבניית אמון עם מטופלים, עבודה יעילה בצוות רפואי ויצירת סביבה טיפולית תומכת.",
-    "advice": "חשוב כיצד תוכל למנף את האמפתיה הגבוהה שלך באינטראקציות מורכבות עם מטופלים, ובו זמנית לשמור על גבולות מקצועיים."
-  }
-}
-\`\`\`
-ודא שהפלט הוא JSON תקין לחלוטין.
+עבור כל תכונה, כתוב בעברית:
+1. "explanation": הסבר קצר ותומך מה המשמעות של רמת הציון שקיבל.
+2. "medicalRelevance": איך הבוחנים במבחן עשויים לפרש תכונה זו. תן דוגמה קונקרטית מתוך ראיון קבלה (למשל: שאלת סימולציה על מטופל מורכב, דילמה אתית, עבודת צוות).
+3. "advice": תרגיל אחד ספציפי שהמועמד יכול לעשות לפני המבחן כדי לחזק תכונה זו, או טיפ קונקרטי להצגת התכונה בצורה אותנטית מול הבוחנים.
+
+הנחיות:
+- שפה תומכת ומעשית, לא גנרית
+- הימנע ממשפטים כמו "זה יכול להיות חיובי או שלילי" - היה ספציפי
+- כל "advice" חייב להיות תרגיל או טיפ קונקרטי, לא המלצה כללית
+
+פלט: JSON תקין. מפתחות: "מצפוניות", "נועם הליכות", "יציבות רגשית", "מוחצנות", "פתיחות מחשבתית".
+כל מפתח מכיל: "explanation", "medicalRelevance", "advice".
 `;
 };
 
@@ -84,7 +80,7 @@ export const getPersonalizedExplanations = async (profile: PersonalityProfile): 
 
   try {
     const response: GenerateContentResponse = await ai.models.generateContent({
-      model: "gemini-2.5-flash-preview-04-17",
+      model: "gemini-2.0-flash",
       contents: prompt,
       config: {
         responseMimeType: "application/json",

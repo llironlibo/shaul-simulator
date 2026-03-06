@@ -225,30 +225,35 @@ const App: React.FC = () => {
         return <AuthScreen onLogin={handleLogin} onRegister={handleRegister} authError={authError} />;
       case AppStage.Welcome:
         return (
-          <div className="text-center p-8 flex flex-col items-center justify-center min-h-[calc(100vh-250px)]">
-            <div className="bg-white p-10 rounded-xl shadow-2xl max-w-4xl">
-              <h2 className="text-4xl font-bold text-sky-700 mb-6">ברוכים הבאים {currentUser?.name}!</h2>
-              <p className="text-lg text-slate-700 mb-4">
-                סימולטור שאו"ל הוא כלי מתקדם להכנה מבוססת אישיות למבחן "שאו"ל" ללימודי רפואה ורפואת שיניים.
-              </p>
-              <p className="text-slate-600 mb-8">
-                גלה את פרופיל האישיות שלך, תרגל קבלת החלטות, קבל ציון התאמה משוער והגע למבחן האמיתי רגוע ובטוח יותר.
-              </p>
-              {apiKeyMissing && (
-                <div className="my-4 p-3 bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 rounded-md">
-                  <p className="font-bold">שימו לב:</p> <p>{API_KEY_ERROR_MESSAGE}</p>
+          <div className="flex items-center justify-center p-4 sm:p-8 min-h-[calc(100vh-200px)]">
+            <div className="w-full max-w-xl">
+              <div className="bg-white p-8 sm:p-10 rounded-2xl shadow-lg text-center">
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-3">
+                  שלום, {currentUser?.name}
+                </h2>
+                <p className="text-slate-600 mb-2">
+                  סימולטור שאו"ל הוא כלי להכנה מבוססת אישיות למבחן הקבלה.
+                </p>
+                <p className="text-sm text-slate-500 mb-8">
+                  גלה את פרופיל האישיות שלך, קבל ציון התאמה משוער ותובנות מותאמות אישית.
+                </p>
+                {apiKeyMissing && (
+                  <div className="mb-6 p-3 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg text-sm">
+                    <p className="font-semibold">שימו לב:</p>
+                    <p className="text-xs mt-1">הסברים מותאמים אישית באמצעות AI אינם זמינים כעת.</p>
+                  </div>
+                )}
+                <div className="space-y-3">
+                  <Button onClick={startSimulation} size="lg" variant="primary" className="w-full">
+                    התחל סימולציה
+                  </Button>
+                  <Button onClick={navigateToEducationalScreen} size="md" variant="secondary" className="w-full">
+                    למד על חמש התכונות הגדולות
+                  </Button>
+                  <Button onClick={navigateToAdminScreen} size="sm" variant="ghost" className="w-full">
+                    פאנל ניהול
+                  </Button>
                 </div>
-              )}
-              <div className="flex flex-col xl:flex-row items-center justify-center gap-4 flex-wrap">
-                <Button onClick={startSimulation} size="md" variant="primary" className="w-full sm:flex-1">
-                  התחל סימולציה
-                </Button>
-                <Button onClick={navigateToEducationalScreen} size="md" variant="secondary" className="w-full sm:flex-1">
-                  למד על חמש התכונות הגדולות
-                </Button>
-                 <Button onClick={navigateToAdminScreen} size="md" variant="secondary" className="w-full sm:flex-1 !bg-slate-600 hover:!bg-slate-700 !text-white">
-                  פאנל ניהול (ריצות)
-                </Button>
               </div>
             </div>
           </div>

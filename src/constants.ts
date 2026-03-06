@@ -10,19 +10,19 @@ export const BIG_FIVE_TRAITS: PersonalityTrait[] = [
 ];
 
 export const TRAIT_COLORS_TAILWIND: Record<PersonalityTrait, string> = {
-  [PersonalityTrait.Conscientiousness]: "bg-blue-500",
-  [PersonalityTrait.Agreeableness]: "bg-green-500",
-  [PersonalityTrait.EmotionalStability]: "bg-purple-500",
-  [PersonalityTrait.Extraversion]: "bg-yellow-500",
-  [PersonalityTrait.Openness]: "bg-pink-500",
+  [PersonalityTrait.Conscientiousness]: "bg-indigo-600",
+  [PersonalityTrait.Agreeableness]: "bg-emerald-600",
+  [PersonalityTrait.EmotionalStability]: "bg-violet-600",
+  [PersonalityTrait.Extraversion]: "bg-amber-500",
+  [PersonalityTrait.Openness]: "bg-rose-500",
 };
 
 export const TRAIT_COLORS_HEX: Record<PersonalityTrait, string> = {
-  [PersonalityTrait.Conscientiousness]: "#3B82F6", // Tailwind blue-500
-  [PersonalityTrait.Agreeableness]: "#22C55E",    // Tailwind green-500
-  [PersonalityTrait.EmotionalStability]: "#A855F7", // Tailwind purple-500
-  [PersonalityTrait.Extraversion]: "#EAB308",   // Tailwind yellow-500
-  [PersonalityTrait.Openness]: "#EC4899",         // Tailwind pink-500
+  [PersonalityTrait.Conscientiousness]: "#4f46e5",
+  [PersonalityTrait.Agreeableness]: "#059669",
+  [PersonalityTrait.EmotionalStability]: "#7c3aed",
+  [PersonalityTrait.Extraversion]: "#f59e0b",
+  [PersonalityTrait.Openness]: "#f43f5e",
 };
 
 export const API_KEY_ERROR_MESSAGE = "מפתח ה-API של Gemini אינו מוגדר או שגוי. האפליקציה לא תוכל לספק הסברים מותאמים אישית באמצעות AI. ניתן להמשיך להשתמש בסימולטור ולקבל פרופיל אישיות בסיסי. אנא ודא שהמשתנה process.env.API_KEY מוגדר כהלכה בסביבת הפיתוח/ההרצה.";
