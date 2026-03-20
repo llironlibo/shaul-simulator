@@ -4,7 +4,7 @@ import { PersonalityProfile, TraitExplanations, ScoringResults, ProfileFlag } fr
 import TraitRadarChart from './TraitRadarChart';
 import ExplanationCard from './ExplanationCard';
 import Button from './Button';
-import { BIG_FIVE_TRAITS } from '../constants';
+import { BIG_FIVE_TRAITS, IDEAL_DENTIST_PROFILE } from '../constants';
 import LoadingSpinner from './LoadingSpinner';
 
 interface ProfileScreenProps {
@@ -35,6 +35,29 @@ const ProfileFlagDisplay: React.FC<{ flag: ProfileFlag }> = ({ flag }) => {
   );
 };
 
+const getScoreInterpretation = (fitScore: number): { label: string; color: string; description: string } => {
+  if (fitScore >= 230) return {
+    label: "התאמה גבוהה מאוד",
+    color: "text-emerald-600",
+    description: "הפרופיל שלך קרוב מאוד לפרופיל האידיאלי של רופא/ת שיניים. התכונות שהפגנת — במיוחד מצפוניות ונועם הליכות — מתאימות למה שהבוחנים מחפשים.",
+  };
+  if (fitScore >= 210) return {
+    label: "התאמה טובה",
+    color: "text-brand-600",
+    description: "הפרופיל שלך מציג התאמה טובה. יש מרווח קטן לשיפור — עיין בתובנות למטה כדי להבין אילו תכונות כדאי לחזק.",
+  };
+  if (fitScore >= 190) return {
+    label: "התאמה בינונית",
+    color: "text-amber-600",
+    description: "יש פער בין הפרופיל שלך לבין הפרופיל האידיאלי. זה לא אומר שאתה לא מתאים — אלא שיש נקודות ספציפיות לעבוד עליהן. עיין בהמלצות למטה.",
+  };
+  return {
+    label: "יש מקום לשיפור",
+    color: "text-rose-600",
+    description: "הפרופיל הנוכחי רחוק יחסית מהפרופיל האידיאלי. השתמש בסימולטור כדי להבין מה הבוחנים מחפשים, ותרגל מתן תשובות אותנטיות שמדגישות את החוזקות שלך.",
+  };
+};
+
 
 const ProfileScreen: React.FC<ProfileScreenProps> = ({
   profile,
@@ -51,6 +74,7 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
   }
 
   const { fitScore, profileFlags } = scoringResults;
+  const interpretation = getScoreInterpretation(fitScore);
 
   return (
     <div className="max-w-4xl mx-auto p-4 sm:p-6 space-y-8">
@@ -59,16 +83,22 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
         <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
           <p className="text-sm font-medium text-slate-500 mb-1">ציון התאמה משוער</p>
           <p className="text-6xl font-bold text-brand-600 mb-2">{fitScore}</p>
-          <p className="text-xs text-slate-400">בסולם 150-250</p>
-          <p className="text-sm text-slate-500 mt-4 max-w-lg mx-auto">
-            הציון משקף התאמה לפרופיל אידיאלי של רופא/ת שיניים. זהו כלי להערכה עצמית, לא מדד מוחלט.
+          <p className="text-xs text-slate-400 mb-3">בסולם 150-250</p>
+          <p className={`text-lg font-semibold ${interpretation.color} mb-2`}>{interpretation.label}</p>
+          <p className="text-sm text-slate-500 max-w-lg mx-auto">
+            {interpretation.description}
           </p>
         </div>
       )}
 
-      {/* Radar Chart */}
+      {/* Radar Chart — user vs ideal vs average */}
       <div className="bg-white rounded-2xl shadow-lg p-6">
-        <TraitRadarChart profile={profile} comparisonProfile={averageProfileForDisplay} comparisonProfileName="ממוצע הנבחנים" />
+        <TraitRadarChart
+          profile={profile}
+          idealProfile={IDEAL_DENTIST_PROFILE}
+          comparisonProfile={averageProfileForDisplay}
+          comparisonProfileName="ממוצע הנבחנים"
+        />
       </div>
 
       {/* Profile Flags */}

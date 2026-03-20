@@ -1,0 +1,1356 @@
+{
+  "statements": [
+    {
+      "id": "s1",
+      "text": "אני תמיד מסיים משימות שהתחלתי.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s2",
+      "text": "חשוב לי לתכנן את הדברים מראש.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s3",
+      "text": "אני שם לב לפרטים הקטנים.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s4",
+      "text": "אני עובד בצורה מסודרת ויעילה.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s5",
+      "text": "אני לוקח את האחריות שלי ברצינות.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s6",
+      "text": "אני אדם שאפשר לסמוך עליו שיבצע את המוטל עליו.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s31",
+      "text": "אני מקפיד על סדר וארגון בסביבת העבודה שלי.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s32",
+      "text": "אני נוטה לעמוד בלוחות זמנים.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s33",
+      "text": "אני משקיע מאמץ כדי שהעבודה שלי תהיה מדויקת.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s34",
+      "text": "אני מכין את עצמי היטב לפני ביצוע משימות חשובות.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s35",
+      "text": "קשה לי להשאיר דברים לא גמורים.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s36",
+      "text": "אני מעדיף לפעול לפי תוכנית ברורה.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s7",
+      "text": "חשוב לי מאוד להבין איך אחרים מרגישים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s8",
+      "text": "אני נוטה לסייע לאחרים גם אם זה לא נוח לי.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s9",
+      "text": "אני מאמין בטוב לבם של אנשים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s10",
+      "text": "אני נמנע מוויכוחים ומעימותים ככל האפשר.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s11",
+      "text": "אני אדם חם ואמפתי.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s12",
+      "text": "קל לי לשתף פעולה עם אחרים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s37",
+      "text": "אני משתדל להיות סבלני עם אנשים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s38",
+      "text": "אני רגיש לצרכים של אחרים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s39",
+      "text": "אני מאמין בשיתוף פעולה כדרך להשגת מטרות.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s40",
+      "text": "אני נוטה לסלוח בקלות.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s41",
+      "text": "חשוב לי לשמור על הרמוניה בקבוצה.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s42",
+      "text": "אני מנסה לראות את הדברים מנקודת מבטם של אחרים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s13",
+      "text": "אני בדרך כלל רגוע ושלו, גם במצבי לחץ.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s14",
+      "text": "אני לא נוטה לדאוג יותר מדי.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s15",
+      "text": "אני מתאושש מהר ממצבי רוח רעים.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s16",
+      "text": "אני מרגיש יציב רגשית ברוב המצבים.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s17",
+      "text": "קשה להוציא אותי משלוותי.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s18",
+      "text": "אני מסוגל להתמודד עם ביקורת בצורה טובה.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s43",
+      "text": "אני לא נותן לכישלונות קטנים להשפיע עליי לאורך זמן.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s44",
+      "text": "אני מצליח לשמור על קור רוח במצבי משבר.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s45",
+      "text": "אני לא נוטה להתרגז בקלות.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s46",
+      "text": "אני מרגיש בטוח בעצמי בדרך כלל.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s47",
+      "text": "אני יכול להתמודד עם שינויים בלתי צפויים.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s48",
+      "text": "דעות של אחרים לא מערערות אותי בקלות.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s19",
+      "text": "אני נהנה להיות במרכז העניינים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s20",
+      "text": "אני מרגיש אנרגטי כשאני נמצא בחברת אנשים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s21",
+      "text": "קל לי ליזום שיחות עם אנשים חדשים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s22",
+      "text": "אני אוהב אירועים חברתיים גדולים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s23",
+      "text": "אני אדם דברן ופתוח.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s24",
+      "text": "אני מחפש ריגושים והרפתקאות.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s49",
+      "text": "אני אוהב להוביל ולהשפיע על אחרים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s50",
+      "text": "יש לי מעגל חברתי רחב.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s51",
+      "text": "אני נהנה מפעילויות קבוצתיות.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s52",
+      "text": "אני מרגיש בנוח לדבר בפני קהל.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s53",
+      "text": "אני אדם אסרטיבי.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s54",
+      "text": "אני אוהב להיות מעורב בהרבה דברים בו זמנית.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s25",
+      "text": "אני סקרן לגבי דברים חדשים ולא מוכרים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s26",
+      "text": "אני נהנה לחשוב על רעיונות מופשטים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s27",
+      "text": "יש לי דמיון מפותח.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s28",
+      "text": "אני מעריך אמנות ויופי.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s29",
+      "text": "אני פתוח לנסות חוויות חדשות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s30",
+      "text": "אני אוהב ללמוד דברים חדשים כל הזמן.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s55",
+      "text": "אני נהנה לחקור תרבויות שונות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s56",
+      "text": "אני פתוח לרעיונות שנראים לא קונבנציונליים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s57",
+      "text": "אני אוהב לפתור בעיות מורכבות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s58",
+      "text": "אני מעריך יצירתיות ומקוריות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s59",
+      "text": "אני משנה את דעתי כאשר מוצגות לי ראיות חדשות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s60",
+      "text": "אני נהנה משיחות פילוסופיות עמוקות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s61",
+      "text": "אני דואג שהדברים יהיו מוכנים מראש.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s62",
+      "text": "אני בודק את העבודה שלי לפני שאני מגיש אותה.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s63",
+      "text": "אני עוקב אחרי רשימות משימות.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s64",
+      "text": "אני לא אוהב לדחות דברים למחר.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s65",
+      "text": "אני מגיע בזמן לפגישות ולמפגשים.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s66",
+      "text": "יש לי שגרה יומית שאני נצמד אליה.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s67",
+      "text": "אני שואף לעשות דברים נכון כבר בפעם הראשונה.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s68",
+      "text": "אני מסדר את החומרים שלי לפני שאני מתחיל לעבוד.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s69",
+      "text": "כשאני מקבל משימה, אני מתחיל לטפל בה מיד.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s70",
+      "text": "אני מתעד דברים חשובים כדי לא לשכוח.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s71",
+      "text": "אני מעדיף לעבוד לפי סדר עדיפויות ברור.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s72",
+      "text": "אני לא מוותר על איכות גם כשאני לחוץ בזמן.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s73",
+      "text": "אני חוזר ובודק פרטים קטנים לפני סיום.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s74",
+      "text": "אני ממלא את ההתחייבויות שלי גם כשזה לא נוח.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s75",
+      "text": "אני שומר על סביבת עבודה נקייה ומסודרת.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s76",
+      "text": "אני מציב לעצמי מטרות ועובד לקראתן בצורה שיטתית.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s77",
+      "text": "אני לומד מטעויות ומשתפר בפעם הבאה.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s78",
+      "text": "אני מקפיד לסיים שלב אחד לפני שאני עובר לבא.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s79",
+      "text": "אני שם לב כשמשהו לא תקין ומטפל בזה.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s80",
+      "text": "חשוב לי שהתוצר הסופי יהיה מושלם.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s81",
+      "text": "אני נוהג לתכנן את השבוע שלי מראש.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s82",
+      "text": "אני לוקח אחריות כשדברים לא הולכים כמתוכנן.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s83",
+      "text": "אני עובד בהתמדה גם כשהמשימה משעממת.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s84",
+      "text": "אני מוודא שאני מבין את ההנחיות לפני שאני מתחיל.",
+      "trait": "Conscientiousness"
+    },
+    {
+      "id": "s85",
+      "text": "אני מקשיב לאנשים בלי לשפוט אותם.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s86",
+      "text": "אני יודע לגרום לאנשים להרגיש בנוח.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s87",
+      "text": "אני מעדיף לפתור סכסוכים בדרכי שלום.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s88",
+      "text": "אני שמח כשאני יכול לעזור למישהו.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s89",
+      "text": "אני מתחשב ברגשות של אחרים כשאני מקבל החלטות.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s90",
+      "text": "אני נותן לאנשים הזדמנות שנייה.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s91",
+      "text": "אני יודע להגיד מילה טובה בזמן הנכון.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s92",
+      "text": "אני מוכן לוותר כדי לשמור על יחסים טובים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s93",
+      "text": "אני מתעניין בחיים של אנשים שאני פוגש.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s94",
+      "text": "אני מנסה להבין מה עומד מאחורי התנהגות של אחרים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s95",
+      "text": "אני אדם שאנשים פונים אליו כשהם צריכים לדבר.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s96",
+      "text": "אני מודה כשאני טועה ומתנצל.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s97",
+      "text": "אני מכבד את הדעות של אחרים גם כשהן שונות משלי.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s98",
+      "text": "אני מעדיף שיתוף פעולה על פני תחרות.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s99",
+      "text": "אני שם לב כשמישהו מרגיש לא בנוח ומנסה לעזור.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s100",
+      "text": "אני מביע הכרת תודה לאנשים שעוזרים לי.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s101",
+      "text": "אני מתייחס בכבוד לכל אדם, ללא קשר למעמדו.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s102",
+      "text": "אני מוכן להקריב מזמני כדי לתמוך בחבר.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s103",
+      "text": "אני יודע לנחם אנשים כשהם עוברים תקופה קשה.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s104",
+      "text": "אני חושב על ההשפעה של המעשים שלי על אחרים.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s105",
+      "text": "אני מסתדר טוב עם כמעט כל אחד.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s106",
+      "text": "אני מעדיף לתת מאשר לקבל.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s107",
+      "text": "אני קשוב לשפת הגוף של אנשים סביבי.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s108",
+      "text": "אני מאמין שרוב האנשים עושים כמיטב יכולתם.",
+      "trait": "Agreeableness"
+    },
+    {
+      "id": "s109",
+      "text": "אני מצליח להישאר רגוע כשדברים משתבשים.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s110",
+      "text": "אני לא מאבד את הראש במצבי חירום.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s111",
+      "text": "אני יודע להפריד בין רגשות לבין החלטות.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s112",
+      "text": "אני מתמודד עם אכזבות בלי להתמוטט.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s113",
+      "text": "אני לא נוטה לקחת דברים באופן אישי.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s114",
+      "text": "אני ישן טוב גם כשיש לי הרבה על הראש.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s115",
+      "text": "אני לא נותן ללחץ להשפיע על האיכות של העבודה שלי.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s116",
+      "text": "אני מרגיש שאני יכול להתמודד עם כל מה שיבוא.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s117",
+      "text": "מצב הרוח שלי יציב לאורך היום.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s118",
+      "text": "אני לא דואג יותר מדי לגבי דברים שלא קרו.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s119",
+      "text": "אני מצליח לשמור על אופטימיות גם בתקופות קשות.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s120",
+      "text": "אני מקבל משוב שלילי בלי להיפגע.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s121",
+      "text": "אני יודע להרגיע את עצמי כשאני מתוח.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s122",
+      "text": "אני לא נכנס ללחץ בקלות.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s123",
+      "text": "אני מסוגל לתפקד טוב גם ביום רע.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s124",
+      "text": "אני לא מרבה להשוות את עצמי לאחרים.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s125",
+      "text": "אני מרגיש ביטחון ביכולות שלי.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s126",
+      "text": "אני לא נוטה להרהר יותר מדי בדברים שכבר קרו.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s127",
+      "text": "אני מתאושש מהר אחרי יום מאתגר.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s128",
+      "text": "אני מסוגל לקבל החלטות גם תחת לחץ.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s129",
+      "text": "אני שומר על שקט פנימי גם כשסביבי כאוס.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s130",
+      "text": "אני לא נוטה לדרמטיזציה של בעיות.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s131",
+      "text": "אני מאמין שקשיים הם חלק טבעי מהחיים.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s132",
+      "text": "אני מצליח להסתכל על מצבים קשים בפרופורציה.",
+      "trait": "EmotionalStability"
+    },
+    {
+      "id": "s133",
+      "text": "אני נהנה להכיר אנשים חדשים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s134",
+      "text": "אני מוצא את עצמי מוביל שיחות בקבוצה.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s135",
+      "text": "אני אוהב לספר סיפורים ולבדר אנשים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s136",
+      "text": "אני מרגיש אנרגיה מאירועים חברתיים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s137",
+      "text": "אני יוזם מפגשים חברתיים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s138",
+      "text": "אני מביע את דעתי בביטחון.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s139",
+      "text": "אני אדם שקל להתחבר אליו.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s140",
+      "text": "אני נהנה לעבוד עם אנשים יותר מאשר לבד.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s141",
+      "text": "אני מכניס אנרגיה לחדר כשאני נכנס.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s142",
+      "text": "אני אוהב לחלוק את החוויות שלי עם אחרים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s143",
+      "text": "אני נוטה ליזום פעולה במקום לחכות.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s144",
+      "text": "אני מרגיש בנוח במצבים חברתיים חדשים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s145",
+      "text": "אני אוהב לתת מוטיבציה לאנשים סביבי.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s146",
+      "text": "אני אדם חברותי מטבעי.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s147",
+      "text": "אני מוצא עניין ברוב האנשים שאני פוגש.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s148",
+      "text": "אני לא מפחד לקחת את ההובלה.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s149",
+      "text": "אני נהנה מעבודה בצוות דינמי.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s150",
+      "text": "אני אוהב להשפיע ולהניע שינויים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s151",
+      "text": "אני מרגיש חי כשאני בסביבה תוססת.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s152",
+      "text": "אני יודע ליצור אווירה חיובית סביבי.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s153",
+      "text": "אני אדם פעלתני שאוהב לעשות דברים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s154",
+      "text": "אני מוכן להציג את הרעיונות שלי בפני קהל.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s155",
+      "text": "אני נהנה מתחרויות ואתגרים חברתיים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s156",
+      "text": "אני מחפש הזדמנויות ללמוד מאנשים אחרים.",
+      "trait": "Extraversion"
+    },
+    {
+      "id": "s157",
+      "text": "אני נהנה לקרוא על נושאים מגוונים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s158",
+      "text": "אני מוצא דרכים יצירתיות לפתור בעיות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s159",
+      "text": "אני פתוח לשמוע נקודות מבט שונות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s160",
+      "text": "אני אוהב לחשוב על דברים בצורה שונה מהרגיל.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s161",
+      "text": "אני נמשך לרעיונות חדשניים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s162",
+      "text": "אני סקרן לגבי איך דברים עובדים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s163",
+      "text": "אני נהנה מאתגרים אינטלקטואליים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s164",
+      "text": "אני אוהב ללמוד מתחומים שלא קשורים ישירות לעבודה שלי.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s165",
+      "text": "אני רואה קשרים בין דברים שנראים לא קשורים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s166",
+      "text": "אני שואל שאלות שאנשים אחרים לא חושבים לשאול.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s167",
+      "text": "אני פתוח לשנות את הדרך שבה אני עושה דברים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s168",
+      "text": "אני מעריך מורכבות ועומק.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s169",
+      "text": "אני נהנה להתנסות בדברים חדשים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s170",
+      "text": "אני חושב שתמיד אפשר ללמוד משהו חדש.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s171",
+      "text": "אני מתרגש מטכנולוגיות וגישות חדשות.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s172",
+      "text": "אני אוהב להעמיק בנושאים שמעניינים אותי.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s173",
+      "text": "אני מוכן לנסות גישות שלא ניסיתי בעבר.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s174",
+      "text": "אני רואה בשינויים הזדמנויות ולא איומים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s175",
+      "text": "אני נהנה משיחות שגורמות לי לחשוב אחרת.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s176",
+      "text": "אני מחפש השראה ממקורות מגוונים.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s177",
+      "text": "אני אדם שאוהב לחקור.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s178",
+      "text": "אני מוצא עניין בדברים שאנשים רבים מתעלמים מהם.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s179",
+      "text": "אני מאמין שיש יותר מדרך אחת לפתור כל בעיה.",
+      "trait": "Openness"
+    },
+    {
+      "id": "s180",
+      "text": "אני אוהב לגלות דברים חדשים על העולם.",
+      "trait": "Openness"
+    }
+  ],
+  "pairs": [
+    {
+      "id": "p1",
+      "statementA": "s1",
+      "statementB": "s7"
+    },
+    {
+      "id": "p2",
+      "statementA": "s13",
+      "statementB": "s19"
+    },
+    {
+      "id": "p3",
+      "statementA": "s25",
+      "statementB": "s2"
+    },
+    {
+      "id": "p4",
+      "statementA": "s8",
+      "statementB": "s14"
+    },
+    {
+      "id": "p5",
+      "statementA": "s20",
+      "statementB": "s26"
+    },
+    {
+      "id": "p6",
+      "statementA": "s3",
+      "statementB": "s11"
+    },
+    {
+      "id": "p7",
+      "statementA": "s15",
+      "statementB": "s23"
+    },
+    {
+      "id": "p8",
+      "statementA": "s27",
+      "statementB": "s4"
+    },
+    {
+      "id": "p9",
+      "statementA": "s9",
+      "statementB": "s17"
+    },
+    {
+      "id": "p10",
+      "statementA": "s22",
+      "statementB": "s28"
+    },
+    {
+      "id": "p11",
+      "statementA": "s5",
+      "statementB": "s12"
+    },
+    {
+      "id": "p12",
+      "statementA": "s18",
+      "statementB": "s21"
+    },
+    {
+      "id": "p13",
+      "statementA": "s30",
+      "statementB": "s6"
+    },
+    {
+      "id": "p14",
+      "statementA": "s10",
+      "statementB": "s16"
+    },
+    {
+      "id": "p15",
+      "statementA": "s24",
+      "statementB": "s29"
+    },
+    {
+      "id": "p16",
+      "statementA": "s31",
+      "statementB": "s37"
+    },
+    {
+      "id": "p17",
+      "statementA": "s43",
+      "statementB": "s49"
+    },
+    {
+      "id": "p18",
+      "statementA": "s55",
+      "statementB": "s32"
+    },
+    {
+      "id": "p19",
+      "statementA": "s38",
+      "statementB": "s44"
+    },
+    {
+      "id": "p20",
+      "statementA": "s50",
+      "statementB": "s56"
+    },
+    {
+      "id": "p21",
+      "statementA": "s33",
+      "statementB": "s39"
+    },
+    {
+      "id": "p22",
+      "statementA": "s45",
+      "statementB": "s51"
+    },
+    {
+      "id": "p23",
+      "statementA": "s57",
+      "statementB": "s34"
+    },
+    {
+      "id": "p24",
+      "statementA": "s40",
+      "statementB": "s46"
+    },
+    {
+      "id": "p25",
+      "statementA": "s52",
+      "statementB": "s58"
+    },
+    {
+      "id": "p26",
+      "statementA": "s35",
+      "statementB": "s41"
+    },
+    {
+      "id": "p27",
+      "statementA": "s47",
+      "statementB": "s53"
+    },
+    {
+      "id": "p28",
+      "statementA": "s59",
+      "statementB": "s36"
+    },
+    {
+      "id": "p29",
+      "statementA": "s42",
+      "statementB": "s48"
+    },
+    {
+      "id": "p30",
+      "statementA": "s54",
+      "statementB": "s60"
+    },
+    {
+      "id": "p31",
+      "statementA": "s61",
+      "statementB": "s85"
+    },
+    {
+      "id": "p32",
+      "statementA": "s109",
+      "statementB": "s133"
+    },
+    {
+      "id": "p33",
+      "statementA": "s157",
+      "statementB": "s62"
+    },
+    {
+      "id": "p34",
+      "statementA": "s86",
+      "statementB": "s110"
+    },
+    {
+      "id": "p35",
+      "statementA": "s134",
+      "statementB": "s158"
+    },
+    {
+      "id": "p36",
+      "statementA": "s63",
+      "statementB": "s87"
+    },
+    {
+      "id": "p37",
+      "statementA": "s111",
+      "statementB": "s135"
+    },
+    {
+      "id": "p38",
+      "statementA": "s159",
+      "statementB": "s64"
+    },
+    {
+      "id": "p39",
+      "statementA": "s88",
+      "statementB": "s112"
+    },
+    {
+      "id": "p40",
+      "statementA": "s136",
+      "statementB": "s160"
+    },
+    {
+      "id": "p41",
+      "statementA": "s65",
+      "statementB": "s89"
+    },
+    {
+      "id": "p42",
+      "statementA": "s113",
+      "statementB": "s137"
+    },
+    {
+      "id": "p43",
+      "statementA": "s161",
+      "statementB": "s66"
+    },
+    {
+      "id": "p44",
+      "statementA": "s90",
+      "statementB": "s114"
+    },
+    {
+      "id": "p45",
+      "statementA": "s138",
+      "statementB": "s162"
+    },
+    {
+      "id": "p46",
+      "statementA": "s67",
+      "statementB": "s91"
+    },
+    {
+      "id": "p47",
+      "statementA": "s115",
+      "statementB": "s139"
+    },
+    {
+      "id": "p48",
+      "statementA": "s163",
+      "statementB": "s68"
+    },
+    {
+      "id": "p49",
+      "statementA": "s92",
+      "statementB": "s116"
+    },
+    {
+      "id": "p50",
+      "statementA": "s140",
+      "statementB": "s164"
+    },
+    {
+      "id": "p51",
+      "statementA": "s69",
+      "statementB": "s93"
+    },
+    {
+      "id": "p52",
+      "statementA": "s117",
+      "statementB": "s141"
+    },
+    {
+      "id": "p53",
+      "statementA": "s165",
+      "statementB": "s70"
+    },
+    {
+      "id": "p54",
+      "statementA": "s94",
+      "statementB": "s118"
+    },
+    {
+      "id": "p55",
+      "statementA": "s142",
+      "statementB": "s166"
+    },
+    {
+      "id": "p56",
+      "statementA": "s71",
+      "statementB": "s95"
+    },
+    {
+      "id": "p57",
+      "statementA": "s119",
+      "statementB": "s143"
+    },
+    {
+      "id": "p58",
+      "statementA": "s167",
+      "statementB": "s72"
+    },
+    {
+      "id": "p59",
+      "statementA": "s96",
+      "statementB": "s120"
+    },
+    {
+      "id": "p60",
+      "statementA": "s144",
+      "statementB": "s168"
+    },
+    {
+      "id": "p61",
+      "statementA": "s73",
+      "statementB": "s97"
+    },
+    {
+      "id": "p62",
+      "statementA": "s121",
+      "statementB": "s145"
+    },
+    {
+      "id": "p63",
+      "statementA": "s169",
+      "statementB": "s74"
+    },
+    {
+      "id": "p64",
+      "statementA": "s98",
+      "statementB": "s122"
+    },
+    {
+      "id": "p65",
+      "statementA": "s146",
+      "statementB": "s170"
+    },
+    {
+      "id": "p66",
+      "statementA": "s75",
+      "statementB": "s99"
+    },
+    {
+      "id": "p67",
+      "statementA": "s123",
+      "statementB": "s147"
+    },
+    {
+      "id": "p68",
+      "statementA": "s171",
+      "statementB": "s76"
+    },
+    {
+      "id": "p69",
+      "statementA": "s100",
+      "statementB": "s124"
+    },
+    {
+      "id": "p70",
+      "statementA": "s148",
+      "statementB": "s172"
+    },
+    {
+      "id": "p71",
+      "statementA": "s77",
+      "statementB": "s101"
+    },
+    {
+      "id": "p72",
+      "statementA": "s125",
+      "statementB": "s149"
+    },
+    {
+      "id": "p73",
+      "statementA": "s173",
+      "statementB": "s78"
+    },
+    {
+      "id": "p74",
+      "statementA": "s102",
+      "statementB": "s126"
+    },
+    {
+      "id": "p75",
+      "statementA": "s150",
+      "statementB": "s174"
+    },
+    {
+      "id": "p76",
+      "statementA": "s79",
+      "statementB": "s103"
+    },
+    {
+      "id": "p77",
+      "statementA": "s127",
+      "statementB": "s151"
+    },
+    {
+      "id": "p78",
+      "statementA": "s175",
+      "statementB": "s80"
+    },
+    {
+      "id": "p79",
+      "statementA": "s104",
+      "statementB": "s128"
+    },
+    {
+      "id": "p80",
+      "statementA": "s152",
+      "statementB": "s176"
+    },
+    {
+      "id": "p81",
+      "statementA": "s81",
+      "statementB": "s105"
+    },
+    {
+      "id": "p82",
+      "statementA": "s129",
+      "statementB": "s153"
+    },
+    {
+      "id": "p83",
+      "statementA": "s177",
+      "statementB": "s82"
+    },
+    {
+      "id": "p84",
+      "statementA": "s106",
+      "statementB": "s130"
+    },
+    {
+      "id": "p85",
+      "statementA": "s154",
+      "statementB": "s178"
+    },
+    {
+      "id": "p86",
+      "statementA": "s83",
+      "statementB": "s107"
+    },
+    {
+      "id": "p87",
+      "statementA": "s131",
+      "statementB": "s155"
+    },
+    {
+      "id": "p88",
+      "statementA": "s179",
+      "statementB": "s84"
+    },
+    {
+      "id": "p89",
+      "statementA": "s108",
+      "statementB": "s132"
+    },
+    {
+      "id": "p90",
+      "statementA": "s156",
+      "statementB": "s180"
+    }
+  ]
+}

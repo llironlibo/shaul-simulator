@@ -1,7 +1,7 @@
 
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { PersonalityProfile, TraitExplanations, PersonalityTrait } from '../types';
-import { API_KEY_ERROR_MESSAGE } from "../constants";
+import { API_KEY_ERROR_MESSAGE, MAX_POSSIBLE_TRAIT_SCORE } from "../constants";
 
 // Safely access the API key from process.env
 const API_KEY_FROM_ENV = (typeof process !== 'undefined' && 
@@ -36,7 +36,7 @@ const constructPrompt = (profile: PersonalityProfile): string => {
 
   return `אתה יועץ מומחה להכנה למבחן שאו"ל (שאלון אישיות למועמדים לרפואת שיניים).
 
-המועמד סיים סימולציה של מבחן אישיות Big Five. הציונים (0-12, ככל שגבוה יותר - בולט יותר):
+המועמד סיים סימולציה של מבחן אישיות Big Five. הציונים (0-${MAX_POSSIBLE_TRAIT_SCORE}, ככל שגבוה יותר - בולט יותר):
 - מצפוניות: ${profileScores[PersonalityTrait.Conscientiousness]}
 - נועם הליכות: ${profileScores[PersonalityTrait.Agreeableness]}
 - יציבות רגשית: ${profileScores[PersonalityTrait.EmotionalStability]}

@@ -11,12 +11,12 @@ import GuidedReflectionScreen from './components/GuidedReflectionScreen';
 import AdminScreen from './components/AdminScreen';
 import AuthScreen from './components/AuthScreen'; // New AuthScreen
 import { AppStage, ItemPair, UserChoice, PersonalityProfile, TraitExplanations, PersonalityTrait, ScoringResults, StoredSimulationRun, User } from './types';
-import { getShuffledItems } from './services/personalityTestData';
+import { getShuffledItems, SIMULATION_ITEMS } from './services/personalityTestData';
 import { getPersonalizedExplanations } from './services/geminiService';
 import { calculateScoringResults } from './services/scoringService';
 import { API_KEY_ERROR_MESSAGE, AVERAGE_APPLICANT_PROFILE } from './constants';
 import { saveSimulationRun, generateRunId, calculateAverageProfileFromStoredRuns, getAllSimulationRuns, clearAllSimulationRuns } from './services/storageService';
-import { initializeAccessCodes, registerUser, loginUser, logoutUser, getCurrentUser } from './services/authService'; // Auth service functions
+import { initializeAccessCodes as _initializeAccessCodes, registerUser, loginUser, logoutUser, getCurrentUser as _getCurrentUser } from './services/authService'; // Auth service functions
 
 // Helper function to check API key status safely
 const isApiKeyAvailable = (): boolean => {
@@ -26,9 +26,12 @@ const isApiKeyAvailable = (): boolean => {
          process.env.API_KEY.trim().length > 0;
 };
 
+// Auth disabled during development — skip straight to Welcome
+const DEV_USER: User = { id: 'dev@test.com', name: 'Dev', email: 'dev@test.com', phone: '', registeredAt: Date.now() };
+
 const App: React.FC = () => {
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [currentStage, setCurrentStage] = useState<AppStage>(AppStage.LoadingResults); // Initial loading state
+  const [currentUser, setCurrentUser] = useState<User | null>(DEV_USER);
+  const [currentStage, setCurrentStage] = useState<AppStage>(AppStage.Welcome);
   const [authError, setAuthError] = useState<string | null>(null);
 
   const [simulationItems, setSimulationItems] = useState<ItemPair[]>([]);
@@ -42,14 +45,8 @@ const App: React.FC = () => {
   const [allRunsForAdmin, setAllRunsForAdmin] = useState<StoredSimulationRun[]>([]);
 
   useEffect(() => {
-    initializeAccessCodes(); // Ensure access codes are in localStorage
-    const user = getCurrentUser();
-    if (user) {
-      setCurrentUser(user);
-      setCurrentStage(AppStage.Welcome); // Go to Welcome if logged in
-    } else {
-      setCurrentStage(AppStage.Auth); // Go to Auth if not logged in
-    }
+    // Auth disabled — always start as dev user
+    // To re-enable: restore getCurrentUser() check and Auth stage logic
 
     if (!isApiKeyAvailable()) {
       setApiKeyMissing(true);
@@ -234,8 +231,11 @@ const App: React.FC = () => {
                 <p className="text-slate-600 mb-2">
                   סימולטור שאו"ל הוא כלי להכנה מבוססת אישיות למבחן הקבלה.
                 </p>
-                <p className="text-sm text-slate-500 mb-8">
+                <p className="text-sm text-slate-500 mb-2">
                   גלה את פרופיל האישיות שלך, קבל ציון התאמה משוער ותובנות מותאמות אישית.
+                </p>
+                <p className="text-xs text-slate-400 mb-8">
+                  {SIMULATION_ITEMS.length} זוגות | כ-{Math.max(3, Math.round(SIMULATION_ITEMS.length * 10 / 60))} דקות | בחירה כפויה בין שני משפטים
                 </p>
                 {apiKeyMissing && (
                   <div className="mb-6 p-3 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg text-sm">

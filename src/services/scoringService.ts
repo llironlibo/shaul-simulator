@@ -53,7 +53,7 @@ const checkProfilePatterns = (profile: PersonalityProfile): ProfileFlag[] => {
   if (standardDeviation < SD_UNIFORMITY_THRESHOLD) {
     flags.push({
       type: ProfileFlagType.HighlyUniform,
-      message: "הפרופיל שלך מציג דפוס עקבי ואחיד למדי בין התכונות השונות. זה יכול להצביע על איזון, אך כדאי לשקול אם כל ההיבטים באישיותך באו לידי ביטוי בצורה מלאה.",
+      message: "הפרופיל שלך מציג דפוס אחיד למדי. במבחן שאו\"ל האמיתי, בוחנים מצפים לראות הבדלים בין תכונות — למשל, מצפוניות גבוהה יותר ממוחצנות. נסה להיות ספציפי יותר בבחירותיך ולשקף מה באמת מאפיין אותך.",
       severity: 'info',
     });
   }
@@ -62,7 +62,7 @@ const checkProfilePatterns = (profile: PersonalityProfile): ProfileFlag[] => {
   if (standardDeviation > SD_POLARIZATION_THRESHOLD) {
     flags.push({
       type: ProfileFlagType.HighlyPolarized,
-      message: "הפרופיל שלך מראה הבדלים משמעותיים בין רמות התכונות השונות. זה יכול לשקף חוזקות מוגדרות היטב, אך כדאי לשקול כיצד האיזון בין התכונות משפיע על התפקוד הכולל בהקשרים מגוונים.",
+      message: "הפרופיל שלך מראה פערים גדולים בין התכונות. ברפואת שיניים, נדרש איזון — דיוק (מצפוניות) לצד אמפתיה (נועם הליכות) ויציבות רגשית. בדוק אם יש תכונה שהזנחת או שהגזמת בה.",
       severity: 'info',
     });
   }
@@ -78,7 +78,7 @@ const checkProfilePatterns = (profile: PersonalityProfile): ProfileFlag[] => {
   if (highPositiveTraitsCount >= NUM_KEY_POSITIVE_TRAITS_AT_HIGH_SCORE_FOR_FLAG) {
     flags.push({
       type: ProfileFlagType.PotentiallyExaggeratedPositive,
-      message: "הפרופיל שלך מציג רמות גבוהות מאוד במספר תכונות הנחשבות רצויות במיוחד. בעוד שתכונות אלו חיוביות, במבחן אמיתי חשוב לוודא שהתשובות משקפות אותך באופן אותנטי ומלא, כולל תחומים בהם אתה פחות 'מושלם' אך עדיין יעיל.",
+      message: "הפרופיל שלך מציג ציונים גבוהים מאוד בתכונות מפתח. במבחן שאו\"ל, הבוחנים מאומנים לזהות \"ניהול רושם\" — מועמד שנראה מושלם מדי נתפס כלא אותנטי. תרגל מתן תשובות כנות שמשלבות גם מודעות לאתגרים שלך.",
       severity: 'warning',
     });
   }
