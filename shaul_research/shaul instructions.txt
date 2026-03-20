@@ -1,0 +1,123 @@
+# SHAUL Simulator — Implementation Plan
+# Goal: Simple, deployable app. Ship fast, improve later.
+# Last updated: 2026-03-20
+
+---
+
+## Current State
+
+- Vite + React + Tailwind, Hebrew RTL
+- 30 forced-choice pairs (60 statements, 12 per trait) — real test has 90-120
+- Scoring: weighted deviation from ideal profile, mapped to 150-250
+- Pattern detection: uniform, polarized, exaggerated positive
+- Auth: localStorage with access codes (not secure, not scalable)
+- AI feedback: Gemini 2.0 Flash (optional, falls back to static)
+- NOT deployed — localhost only
+
+---
+
+## MVP Priorities (Ship First)
+
+### Step 1: Expand Question Bank to 90 Pairs
+- Real test has 90-120 pairs. Current app has only 30.
+- Add 60 more statement pairs (total: 180 statements, 36 per trait)
+- Statements must be in Hebrew, matched for social desirability
+- Each pair must pit two DIFFERENT traits against each other
+- Source: IPIP (https://ipip.ori.org/newMultipleconstructs.htm) adapted to Hebrew + dental context
+- Keep forced-choice format — this IS the real test format
+- Maintain equal trait representation (each trait appears same number of times)
+
+### Step 2: Seed Norm Data
+- Current scoring uses static deviation. The real test is norm-referenced.
+- Problem: with zero users, percentile ranking is meaningless.
+- Solution: pre-seed with ~200 synthetic score profiles representing realistic distribution.
+- Generate seed data using: normal distribution around mean=200, SD=20 on the 150-250 scale.
+- Store in Supabase (or ship with hardcoded seed array for localStorage MVP).
+- As real users accumulate, seed data gets diluted naturally.
+
+### Step 3: Deploy to Lovable
+- Push to GitHub (llironlibo/shaul-simulator)
+- Push main branch -> Lovable auto-deploys
+- Verify: Hebrew RTL renders, forced-choice works, scoring works, Gemini API key is set
+
+### Step 4: Replace Auth with Supabase
+- Current localStorage auth is not secure and not persistent across devices
+- Supabase auth: email + password, or magic link
+- Access code gating: keep as registration requirement (Supabase custom claim or check table)
+- Migrate stored simulation runs from localStorage to Supabase table
+
+### Step 5: Polish Results Screen
+- Show Big Five radar chart (already exists)
+- Show fit score (150-250) with explanation of what it means
+- Show pattern flags (uniform, polarized, exaggerated) with actionable advice
+- Gemini AI personalized feedback per trait
+- Add: comparison to average profile (where you stand vs. typical candidate)
+
+---
+
+## Scoring Algorithm (Keep Simple)
+
+### What We Have (Good Enough for MVP)
+1. User answers 90 forced-choice pairs
+2. Each choice increments the score for the chosen trait
+3. Build 5-trait profile (each trait 0 to max based on number of appearances)
+4. Calculate weighted squared error from ideal profile:
+   - (userScore - idealScore)^2 * traitWeight for each trait
+   - Sum = Total_Weighted_Error
+5. Invert: Raw_Fit_Score = MAX_POSSIBLE_ERROR - Total_Weighted_Error
+6. Percentile rank against all past scores (seeded + real users)
+7. Final_Score = 150 + Percentile_Rank (clamped 150-250)
+
+### Ideal Profile (evidence-based estimates)
+Based on research + Liron's expert knowledge:
+- Conscientiousness: HIGH (weight 30%)
+- Agreeableness: HIGH (weight 25%)
+- Emotional Stability: MODERATE-HIGH (weight 25%)
+- Extraversion: MODERATE (weight 10%)
+- Openness: MODERATE (weight 10%)
+
+Note: NOT "max everything." Curvilinear — can be too high on any trait.
+The ideal is a RANGE, not a maximum. Pattern detection catches this.
+
+### Pattern Detection (Keep)
+- Highly Uniform (SD < 1.5): suspiciously flat profile
+- Highly Polarized (SD > 2.5): extreme variation
+- Exaggerated Positive (2+ key traits at top): likely faking
+
+---
+
+## Future Phases (NOT for MVP — defer entirely)
+
+### Phase 2: Adaptive Testing (when we have users)
+- Tag statements with difficulty (Easy/Medium/Hard)
+- Engine adjusts difficulty based on responses mid-test
+- Same scoring, smarter question selection
+- Requires: expert review of all 180 statements for difficulty tagging
+
+### Phase 3: IRT + Predictive Model (when we have data)
+- Requires: thousands of user runs + verified real SHAUL scores
+- IRT calibration of question parameters (difficulty, discrimination)
+- Thurstonian IRT for proper forced-choice normative scoring
+- ML model trained on (profile -> real score) pairs
+- CAT engine selecting maximally informative questions
+- This is a research project, not an app feature. Defer until data exists.
+
+---
+
+## Key Design Decisions
+
+1. **Forced-choice pairs** — matches real SHAUL format. Non-negotiable.
+2. **Hebrew RTL** — the test is in Hebrew. Non-negotiable.
+3. **90 pairs** — minimum realistic test length. 30 is too few.
+4. **Norm-referenced scoring** — percentile-based, like the real test.
+5. **Access-code gated** — not free public tool. Part of Liron's funnel.
+6. **Gemini AI feedback** — differentiator vs. competitors. Keep optional.
+7. **No Likert scales** — the real test doesn't use them. Forced-choice only.
+
+---
+
+## Reference
+- IPIP constructs: https://ipip.ori.org/newMultipleconstructs.htm
+- Full research: see SHAUL_Test_Complete_Research.md in this folder
+- Real test: 90-120 forced-choice pairs, 60 min, score 150-250 (mean 200, SD 20)
+- NITE official: https://www.nite.org.il/other-tests/shaul/?lang=en

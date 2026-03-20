@@ -2,7 +2,7 @@
 
 ## Project
 
-Sha'ul Simulator -- a personality test prep tool for dental school admission candidates. Simulates the Sha'ul (Big Five) personality assessment used in Israeli dental school admissions. Hebrew RTL app with localStorage auth and optional Gemini AI feedback.
+Sha'ul Simulator -- a personality test prep tool for dental school admission candidates. Simulates the Sha'ul (Big Five) personality assessment used in Israeli dental school admissions. Hebrew RTL app with localStorage auth (currently disabled) and optional Gemini AI feedback.
 
 Part of Liron's dental prep ecosystem alongside easy-access-page (landing) and dat-spatial-lab (spatial reasoning).
 
@@ -27,30 +27,57 @@ This is needed due to a known npm bug with optional dependencies on Windows.
 
 Single-page React app with stage-based navigation (no router).
 
-### App Stages
+### Two Modes (planned, not yet wired)
 
-Auth -> Welcome -> Simulation (intro -> 90 pairs) -> LoadingResults -> Results -> GuidedReflection
-                -> Educational (Big Five explainer)
-                -> Admin (view runs, manage access codes)
+| Mode | Purpose | Pairs per session | Pool draws from |
+|------|---------|-------------------|-----------------|
+| **Learning** | Practice, explore traits, improve answers | 30 | `learning-pool.json` (150 pairs) |
+| **Simulation** | Full test replica matching real SHAUL | 120 | `simulation-pool.json` (300 pairs) |
+
+The two pools are **completely separate** — no shared statements or pairs.
+
+### App Stages (current)
+
+Welcome -> Simulation (intro -> pairs) -> LoadingResults -> Results -> GuidedReflection
+        -> Educational (Big Five explainer)
+        -> Admin (view runs, manage access codes)
+
+Auth is disabled during development (DEV_USER auto-login in App.tsx).
 
 ### Key Files
 
 | File | Purpose |
 |------|---------|
-| `src/App.tsx` | Main orchestrator, stage management, auth handlers |
+| `src/App.tsx` | Main orchestrator, stage management |
 | `src/types.ts` | All TypeScript types and enums |
 | `src/constants.ts` | Re-exports auto-scaled scoring config + static constants |
-| `src/data/questions.json` | **Single source of truth** for all statements and pairs |
+| `src/data/questions.json` | Legacy single pool (180 statements, 90 pairs) |
+| `src/data/learning-pool.json` | Learning mode pool (300 statements, 150 pairs) |
+| `src/data/simulation-pool.json` | Simulation mode pool (600 statements, 300 pairs) |
 | `src/services/configService.ts` | Loads questions.json, computes scoring constants dynamically |
-| `src/services/personalityTestData.ts` | Thin wrapper — loads pairs from configService, Fisher-Yates shuffle |
+| `src/services/personalityTestData.ts` | Loads pairs from configService, Fisher-Yates shuffle |
 | `src/services/scoringService.ts` | Weighted deviation scoring (150-250 scale) |
 | `src/services/geminiService.ts` | Gemini API for personalized trait explanations |
 | `src/services/storageService.ts` | localStorage for simulation runs |
-| `src/services/authService.ts` | localStorage auth with access codes |
+| `src/services/authService.ts` | localStorage auth with access codes (disabled) |
+
+### Content Pools
+
+**Learning pool** (`learning-pool.json`):
+- 300 statements (60 per trait), 150 pairs
+- Clearer, educational statements for practice and trait exploration
+- Draw 30 pairs per session → 5 fully unique sessions possible
+
+**Simulation pool** (`simulation-pool.json`):
+- 600 statements (120 per trait), 300 pairs
+- Nuanced, subtle statements mirroring the real SHAUL test
+- Draw 120 pairs per test (matches real SHAUL) → 2-3 unique tests possible
+
+**Legacy pool** (`questions.json`):
+- 180 statements, 90 pairs — currently used by the app
+- Will be replaced when mode selection is wired up
 
 ### Content Pipeline (Google Sheet → JSON)
-
-All test content lives in `src/data/questions.json`. To edit content:
 
 ```
 Liron edits Google Sheet (Statements + Pairs tabs)
@@ -77,18 +104,11 @@ Google Sheet structure:
 
 ### Auto-Scaling Scoring
 
-`configService.ts` computes all scoring constants from `questions.json` at load time:
-- `MAX_POSSIBLE_TRAIT_SCORE` = trait appearances in pairs (currently 36)
+`configService.ts` computes all scoring constants from the active pool at load time:
+- `MAX_POSSIBLE_TRAIT_SCORE` = trait appearances in drawn pairs
 - `IDEAL_DENTIST_PROFILE` = proportional to max (C:67%, A:67%, ES:50%, E:33%, O:33%)
 - Pattern detection thresholds scale proportionally
-- **No code changes needed** when adding/removing pairs in the Google Sheet
-
-### Auth System
-
-- localStorage-based, no backend
-- Access codes hardcoded in `constants.ts` (INITIAL_ACCESS_CODES)
-- Passwords "obfuscated" with btoa (NOT secure -- client-side only)
-- Registration requires unused access code
+- **No code changes needed** when adding/removing pairs
 
 ### AI Explanations
 
@@ -110,8 +130,11 @@ Google Sheet structure:
 
 | Script | Purpose |
 |--------|---------|
-| `scripts/export_sheet_to_json.py` | Google Sheet CSV/xlsx → questions.json (with validation) |
-| `scripts/expand_content.py` | Reference: how 120 new statements (s61-s180) were generated |
+| `scripts/export_sheet_to_json.py` | Google Sheet CSV/xlsx → questions.json (bidirectional) |
+| `scripts/assemble_pools.py` | Combines trait content files → learning-pool.json + simulation-pool.json |
+| `scripts/expand_content.py` | Reference: how s61-s180 were generated |
+| `scripts/shaul_content.xlsx` | Excel with Statements, Pairs, and Pairs Lookup sheets |
+| `scripts/content/*.py` | Raw statement data per trait (LEARNING + SIMULATION lists) |
 
 ## Design
 
@@ -126,14 +149,16 @@ Google Sheet structure:
 1. `.env.local` contains `GEMINI_API_KEY` -- never commit this file (gitignored via `*.local`)
 2. Access codes are in `constants.ts` INITIAL_ACCESS_CODES -- only seeded on first load if localStorage is empty
 3. The `@vitejs/plugin-react` (Babel) is used, NOT SWC -- SWC native bindings fail on this Windows machine
-4. Deployment: not yet deployed to Lovable. Currently localhost-only with localStorage auth.
-5. No ESLint or test framework configured. Linting and testing are not available.
-6. **Content changes go through the Google Sheet → export script → questions.json pipeline. Never hardcode statements or pairs in TypeScript.**
+4. Deployment: not yet deployed to Lovable. Currently localhost-only.
+5. No ESLint or test framework configured.
+6. **Content changes go through the Google Sheet → export script pipeline. Never hardcode statements or pairs in TypeScript.**
+7. **Learning and simulation pools must NEVER share statements or pairs.**
 
 ## Pending Work
 
+- Wire up mode selection UI (learning vs simulation) to use the two pool JSON files
 - Deploy to Lovable (requires GitHub repo at llironlibo/shaul-simulator)
-- Supabase auth to replace localStorage auth
+- Supabase auth to replace localStorage auth (currently disabled)
 - Backend for persistent data storage
 - Email verification flow
-- Liron's Hebrew review of the 120 new statements (s61-s180)
+- Liron's Hebrew review of all generated statements (~840 new)
