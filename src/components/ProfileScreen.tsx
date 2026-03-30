@@ -4,13 +4,15 @@ import { PersonalityProfile, TraitExplanations, ScoringResults, ProfileFlag } fr
 import TraitRadarChart from './TraitRadarChart';
 import ExplanationCard from './ExplanationCard';
 import Button from './Button';
-import { BIG_FIVE_TRAITS, IDEAL_DENTIST_PROFILE } from '../constants';
+import { BIG_FIVE_TRAITS } from '../constants';
 import LoadingSpinner from './LoadingSpinner';
 
 interface ProfileScreenProps {
   profile: PersonalityProfile | null;
   explanations: TraitExplanations | null;
   scoringResults: ScoringResults | null;
+  maxTraitScore: number;
+  idealDentistProfile: PersonalityProfile;
   onRetake: () => void;
   isLoadingExplanations: boolean;
   onNavigateToGuidedReflection: () => void;
@@ -63,6 +65,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
   profile,
   explanations,
   scoringResults,
+  maxTraitScore,
+  idealDentistProfile,
   onRetake,
   isLoadingExplanations,
   onNavigateToGuidedReflection,
@@ -95,7 +99,8 @@ const ProfileScreen: React.FC<ProfileScreenProps> = ({
       <div className="bg-white rounded-2xl shadow-lg p-6">
         <TraitRadarChart
           profile={profile}
-          idealProfile={IDEAL_DENTIST_PROFILE}
+          maxTraitScore={maxTraitScore}
+          idealProfile={idealDentistProfile}
           comparisonProfile={averageProfileForDisplay}
           comparisonProfileName="ממוצע הנבחנים"
         />

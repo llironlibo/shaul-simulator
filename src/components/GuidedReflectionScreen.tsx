@@ -2,11 +2,12 @@
 import React from 'react';
 import { PersonalityProfile, ScoringResults, PersonalityTrait, ProfileFlagType } from '../types';
 import Button from './Button';
-import { BIG_FIVE_TRAITS, MAX_POSSIBLE_TRAIT_SCORE } from '../constants';
+import { BIG_FIVE_TRAITS } from '../constants';
 
 interface GuidedReflectionScreenProps {
   profile: PersonalityProfile | null;
   scoringResults: ScoringResults | null;
+  maxTraitScore: number;
   onBackToResults: () => void;
   onRetakeSimulation: () => void;
 }
@@ -14,6 +15,7 @@ interface GuidedReflectionScreenProps {
 const GuidedReflectionScreen: React.FC<GuidedReflectionScreenProps> = ({
   profile,
   scoringResults,
+  maxTraitScore,
   onBackToResults,
   onRetakeSimulation,
 }) => {
@@ -32,7 +34,7 @@ const GuidedReflectionScreen: React.FC<GuidedReflectionScreenProps> = ({
     let highestTraits: Array<{ trait: PersonalityTrait; score: number }> = [];
     let lowestTraits: Array<{ trait: PersonalityTrait; score: number }> = [];
     let maxScore = -1;
-    let minScore = MAX_POSSIBLE_TRAIT_SCORE + 1;
+    let minScore = maxTraitScore + 1;
 
     BIG_FIVE_TRAITS.forEach(trait => {
       const score = profile[trait];
@@ -61,7 +63,7 @@ const GuidedReflectionScreen: React.FC<GuidedReflectionScreenProps> = ({
   const reflectionPrompts: string[] = [];
 
   if (highestTraits.length > 0) {
-    const highestTraitText = highestTraits.map(ht => `${ht.trait} (ניקוד: ${ht.score}/${MAX_POSSIBLE_TRAIT_SCORE})`).join(', ');
+    const highestTraitText = highestTraits.map(ht => `${ht.trait} (ניקוד: ${ht.score}/${maxTraitScore})`).join(', ');
     reflectionPrompts.push(
       `התכונה (או התכונות) הבולטת ביותר שלך היא **${highestTraitText}**. 
       כיצד תוכל למנף חוזק זה באופן מיטבי במסגרת לימודי הרפואה ובאינטראקציות עם מטופלים ועמיתים? 
@@ -71,7 +73,7 @@ const GuidedReflectionScreen: React.FC<GuidedReflectionScreenProps> = ({
 
   const distinctLowestTraits = lowestTraits.filter(lt => !highestTraits.find(ht => ht.trait === lt.trait));
   if (distinctLowestTraits.length > 0) {
-    const lowestTraitText = distinctLowestTraits.map(lt => `${lt.trait} (ניקוד: ${lt.score}/${MAX_POSSIBLE_TRAIT_SCORE})`).join(', ');
+    const lowestTraitText = distinctLowestTraits.map(lt => `${lt.trait} (ניקוד: ${lt.score}/${maxTraitScore})`).join(', ');
     reflectionPrompts.push(
       `התכונה (או התכונות) הפחות בולטת בפרופיל שלך היא **${lowestTraitText}**. 
       באילו מצבים מקצועיים או אקדמיים היבט זה עשוי לדרוש ממך מאמץ מודע יותר או פיתוח אסטרטגיות פיצוי? 

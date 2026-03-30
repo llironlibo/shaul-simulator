@@ -17,24 +17,20 @@ npx tsc --noEmit     # Type-check only (no lint/test scripts configured)
 
 ### Windows Local Dev
 
-After `npm install`, you must also run:
-```bash
-npm install @rollup/rollup-win32-x64-msvc
-```
-This is needed due to a known npm bug with optional dependencies on Windows.
+After `npm install`, also run `npm install @rollup/rollup-win32-x64-msvc` (npm optional deps bug).
 
 ## Architecture
 
 Single-page React app with stage-based navigation (no router).
 
-### Two Modes (planned, not yet wired)
+### Two Modes
 
 | Mode | Purpose | Pairs per session | Pool draws from |
 |------|---------|-------------------|-----------------|
 | **Learning** | Practice, explore traits, improve answers | 30 | `learning-pool.json` (150 pairs) |
 | **Simulation** | Full test replica matching real SHAUL | 120 | `simulation-pool.json` (300 pairs) |
 
-The two pools are **completely separate** — no shared statements or pairs.
+Mode selection happens on the Welcome screen (two buttons). Each session draws a fresh random subset via Fisher-Yates shuffle. Both pool JSONs are loaded at startup (~300KB total). The two pools are **completely separate** — no shared statements or pairs.
 
 ### App Stages (current)
 
@@ -48,83 +44,27 @@ Auth is disabled during development (DEV_USER auto-login in App.tsx).
 
 | File | Purpose |
 |------|---------|
-| `src/App.tsx` | Main orchestrator, stage management |
-| `src/types.ts` | All TypeScript types and enums |
-| `src/constants.ts` | Re-exports auto-scaled scoring config + static constants |
-| `src/data/questions.json` | Legacy single pool (180 statements, 90 pairs) |
+| `src/App.tsx` | Main orchestrator, stage management, mode selection |
+| `src/types.ts` | All TypeScript types and enums (incl. `SimulationMode`) |
+| `src/constants.ts` | Static constants only (traits, colors, weights, auth) |
 | `src/data/learning-pool.json` | Learning mode pool (300 statements, 150 pairs) |
 | `src/data/simulation-pool.json` | Simulation mode pool (600 statements, 300 pairs) |
-| `src/services/configService.ts` | Loads questions.json, computes scoring constants dynamically |
-| `src/services/personalityTestData.ts` | Loads pairs from configService, Fisher-Yates shuffle |
-| `src/services/scoringService.ts` | Weighted deviation scoring (150-250 scale) |
-| `src/services/geminiService.ts` | Gemini API for personalized trait explanations |
+| `src/services/configService.ts` | Loads both pools, exports `getPoolConfig(mode)` returning `PoolConfig` |
+| `src/services/personalityTestData.ts` | `drawRandomPairs(mode)` — Fisher-Yates shuffle + slice |
+| `src/services/scoringService.ts` | Weighted deviation scoring (150-250 scale), accepts `PoolConfig` |
+| `src/services/geminiService.ts` | Gemini API for personalized trait explanations, accepts `maxTraitScore` |
 | `src/services/storageService.ts` | localStorage for simulation runs |
 | `src/services/authService.ts` | localStorage auth with access codes (disabled) |
 
-### Content Pools
+### Content Pools & Pipeline
 
-**Learning pool** (`learning-pool.json`):
-- 300 statements (60 per trait), 150 pairs
-- Clearer, educational statements for practice and trait exploration
-- Draw 30 pairs per session → 5 fully unique sessions possible
+Pools are separate — learning (150 pairs, educational) and simulation (300 pairs, real SHAUL). Content pipeline: Google Sheet → `scripts/export_sheet_to_json.py` (accepts --xlsx or --statements/--pairs CSV) → pool JSON. Reverse export: `--export-csv scripts/`. Sheet columns: Statements (`id, text_he, trait, notes`), Pairs (`id, statement_a, statement_b, notes`). Valid traits: `Conscientiousness`, `Agreeableness`, `EmotionalStability`, `Extraversion`, `Openness`.
 
-**Simulation pool** (`simulation-pool.json`):
-- 600 statements (120 per trait), 300 pairs
-- Nuanced, subtle statements mirroring the real SHAUL test
-- Draw 120 pairs per test (matches real SHAUL) → 2-3 unique tests possible
+### Scoring & AI
 
-**Legacy pool** (`questions.json`):
-- 180 statements, 90 pairs — currently used by the app
-- Will be replaced when mode selection is wired up
-
-### Content Pipeline (Google Sheet → JSON)
-
-```
-Liron edits Google Sheet (Statements + Pairs tabs)
-    ↓
-Download as .xlsx or export each sheet as CSV
-    ↓
-python scripts/export_sheet_to_json.py --xlsx sheet.xlsx --output src/data/questions.json
-  OR
-python scripts/export_sheet_to_json.py --statements s.csv --pairs p.csv --output src/data/questions.json
-    ↓
-App auto-reads new content (npm run dev)
-Scoring auto-scales to new pair count
-```
-
-To export current JSON back to CSV for Google Sheet import:
-```bash
-python scripts/export_sheet_to_json.py --export-csv scripts/ --output src/data/questions.json
-```
-
-Google Sheet structure:
-- **Sheet "Statements"**: columns `id`, `text_he`, `trait`, `notes`
-- **Sheet "Pairs"**: columns `id`, `statement_a`, `statement_b`, `notes`
-- Valid traits: `Conscientiousness`, `Agreeableness`, `EmotionalStability`, `Extraversion`, `Openness`
-
-### Auto-Scaling Scoring
-
-`configService.ts` computes all scoring constants from the active pool at load time:
-- `MAX_POSSIBLE_TRAIT_SCORE` = trait appearances in drawn pairs
-- `IDEAL_DENTIST_PROFILE` = proportional to max (C:67%, A:67%, ES:50%, E:33%, O:33%)
-- Pattern detection thresholds scale proportionally
-- **No code changes needed** when adding/removing pairs
-
-### AI Explanations
-
-- Gemini 2.0 Flash (stable) via `@google/genai`
-- API key from `.env.local` -> `GEMINI_API_KEY` (injected via vite.config.ts define)
-- Prompt tuned for dental interview context with concrete exercises
-- Score range in prompt is dynamic (uses MAX_POSSIBLE_TRAIT_SCORE)
-- Falls back to static messages if API key missing
-
-### Scoring
-
-- Big Five traits: Conscientiousness, Agreeableness, Emotional Stability, Extraversion, Openness
-- Weighted deviation from ideal dentist profile (curvilinear — too high is also penalized)
-- Trait weights: C:30%, A:25%, ES:25%, E:10%, O:10%
-- Fit score: 150-250
-- Pattern detection: uniform, polarized, exaggerated positive (dental-specific messages)
+- `configService.ts` pre-computes `PoolConfig` per mode — scoring auto-scales, no code changes needed when modifying pools
+- Weighted deviation from ideal dentist profile (curvilinear). Weights: C:30%, A:25%, ES:25%, E:10%, O:10%. Score: 150-250
+- Gemini 2.0 Flash via `@google/genai`, API key in `.env.local` (`GEMINI_API_KEY`). Falls back to static if missing
 
 ## Scripts
 
@@ -156,7 +96,6 @@ Google Sheet structure:
 
 ## Pending Work
 
-- Wire up mode selection UI (learning vs simulation) to use the two pool JSON files
 - Deploy to Lovable (requires GitHub repo at llironlibo/shaul-simulator)
 - Supabase auth to replace localStorage auth (currently disabled)
 - Backend for persistent data storage

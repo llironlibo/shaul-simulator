@@ -1,7 +1,7 @@
 
 import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 import { PersonalityProfile, TraitExplanations, PersonalityTrait } from '../types';
-import { API_KEY_ERROR_MESSAGE, MAX_POSSIBLE_TRAIT_SCORE } from "../constants";
+import { API_KEY_ERROR_MESSAGE } from "../constants";
 
 // Safely access the API key from process.env
 const API_KEY_FROM_ENV = (typeof process !== 'undefined' && 
@@ -27,7 +27,7 @@ if (API_KEY_FROM_ENV && API_KEY_FROM_ENV.trim().length > 0) {
   console.warn(API_KEY_ERROR_MESSAGE);
 }
 
-const constructPrompt = (profile: PersonalityProfile): string => {
+const constructPrompt = (profile: PersonalityProfile, maxTraitScore: number): string => {
   const profileScores: Partial<Record<PersonalityTrait, number>> = {};
   for (const traitKey in profile) {
     const trait = traitKey as PersonalityTrait;
@@ -36,7 +36,7 @@ const constructPrompt = (profile: PersonalityProfile): string => {
 
   return `אתה יועץ מומחה להכנה למבחן שאו"ל (שאלון אישיות למועמדים לרפואת שיניים).
 
-המועמד סיים סימולציה של מבחן אישיות Big Five. הציונים (0-${MAX_POSSIBLE_TRAIT_SCORE}, ככל שגבוה יותר - בולט יותר):
+המועמד סיים סימולציה של מבחן אישיות Big Five. הציונים (0-${maxTraitScore}, ככל שגבוה יותר - בולט יותר):
 - מצפוניות: ${profileScores[PersonalityTrait.Conscientiousness]}
 - נועם הליכות: ${profileScores[PersonalityTrait.Agreeableness]}
 - יציבות רגשית: ${profileScores[PersonalityTrait.EmotionalStability]}
@@ -60,7 +60,7 @@ const constructPrompt = (profile: PersonalityProfile): string => {
 `;
 };
 
-export const getPersonalizedExplanations = async (profile: PersonalityProfile): Promise<TraitExplanations | null> => {
+export const getPersonalizedExplanations = async (profile: PersonalityProfile, maxTraitScore: number): Promise<TraitExplanations | null> => {
   if (!ai) {
     // AI client is not initialized, either due to missing/invalid API key or initialization error.
     // The console.warn in the module scope would have already notified about the API key status.
@@ -76,7 +76,7 @@ export const getPersonalizedExplanations = async (profile: PersonalityProfile): 
     return fallbackExplanations;
   }
 
-  const prompt = constructPrompt(profile);
+  const prompt = constructPrompt(profile, maxTraitScore);
 
   try {
     const response: GenerateContentResponse = await ai.models.generateContent({

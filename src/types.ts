@@ -47,6 +47,11 @@ export interface TraitExplanations {
   [PersonalityTrait.Openness]?: TraitExplanationContent;
 }
 
+export enum SimulationMode {
+  Learning = "learning",
+  Simulation = "simulation",
+}
+
 export enum AppStage {
   Auth = "auth", // Handles login and registration
   Welcome = "welcome", // Shown after successful login/registration

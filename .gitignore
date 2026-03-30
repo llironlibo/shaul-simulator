@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 desktop.ini
 __pycache__/
+shaul_research/*.mp4
+shaul_research/*.pdf

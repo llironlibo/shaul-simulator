@@ -2,10 +2,11 @@
 import React from 'react';
 import { Radar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, ResponsiveContainer, Tooltip, Legend } from 'recharts';
 import { PersonalityProfile, PersonalityTrait } from '../types';
-import { TRAIT_COLORS_HEX, MAX_POSSIBLE_TRAIT_SCORE, BIG_FIVE_TRAITS } from '../constants';
+import { TRAIT_COLORS_HEX, BIG_FIVE_TRAITS } from '../constants';
 
 interface TraitRadarChartProps {
   profile: PersonalityProfile;
+  maxTraitScore: number;
   comparisonProfile?: PersonalityProfile;
   comparisonProfileName?: string;
   idealProfile?: PersonalityProfile;
@@ -13,6 +14,7 @@ interface TraitRadarChartProps {
 
 const TraitRadarChart: React.FC<TraitRadarChartProps> = ({
   profile,
+  maxTraitScore,
   comparisonProfile,
   comparisonProfileName = "פרופיל השוואה",
   idealProfile,
@@ -27,7 +29,7 @@ const TraitRadarChart: React.FC<TraitRadarChartProps> = ({
     } = {
       subject: trait,
       score: profile[trait],
-      fullMark: MAX_POSSIBLE_TRAIT_SCORE,
+      fullMark: maxTraitScore,
     };
     if (comparisonProfile) {
       traitData.comparisonScore = comparisonProfile[trait];
@@ -71,8 +73,8 @@ const TraitRadarChart: React.FC<TraitRadarChartProps> = ({
           />
           <PolarRadiusAxis
             angle={90}
-            domain={[0, MAX_POSSIBLE_TRAIT_SCORE]}
-            tickCount={Math.min(MAX_POSSIBLE_TRAIT_SCORE + 1, 13)}
+            domain={[0, maxTraitScore]}
+            tickCount={Math.min(maxTraitScore + 1, 13)}
             allowDecimals={false}
             tick={{ fontSize: 10, fill: '#64748b' }}
           />

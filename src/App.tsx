@@ -9,14 +9,15 @@ import Button from './components/Button';
 import EducationalScreen from './components/EducationalScreen';
 import GuidedReflectionScreen from './components/GuidedReflectionScreen';
 import AdminScreen from './components/AdminScreen';
-import AuthScreen from './components/AuthScreen'; // New AuthScreen
-import { AppStage, ItemPair, UserChoice, PersonalityProfile, TraitExplanations, PersonalityTrait, ScoringResults, StoredSimulationRun, User } from './types';
-import { getShuffledItems, SIMULATION_ITEMS } from './services/personalityTestData';
+import AuthScreen from './components/AuthScreen';
+import { AppStage, SimulationMode, ItemPair, UserChoice, PersonalityProfile, TraitExplanations, PersonalityTrait, ScoringResults, StoredSimulationRun, User } from './types';
+import { drawRandomPairs } from './services/personalityTestData';
+import { getPoolConfig, PoolConfig } from './services/configService';
 import { getPersonalizedExplanations } from './services/geminiService';
 import { calculateScoringResults } from './services/scoringService';
-import { API_KEY_ERROR_MESSAGE, AVERAGE_APPLICANT_PROFILE } from './constants';
+import { API_KEY_ERROR_MESSAGE } from './constants';
 import { saveSimulationRun, generateRunId, calculateAverageProfileFromStoredRuns, getAllSimulationRuns, clearAllSimulationRuns } from './services/storageService';
-import { initializeAccessCodes as _initializeAccessCodes, registerUser, loginUser, logoutUser, getCurrentUser as _getCurrentUser } from './services/authService'; // Auth service functions
+import { initializeAccessCodes as _initializeAccessCodes, registerUser, loginUser, logoutUser, getCurrentUser as _getCurrentUser } from './services/authService';
 
 // Helper function to check API key status safely
 const isApiKeyAvailable = (): boolean => {
@@ -26,14 +27,18 @@ const isApiKeyAvailable = (): boolean => {
          process.env.API_KEY.trim().length > 0;
 };
 
-// Auth disabled during development — skip straight to Welcome
+// Auth disabled during development -- skip straight to Welcome
 const DEV_USER: User = { id: 'dev@test.com', name: 'Dev', email: 'dev@test.com', phone: '', registeredAt: Date.now() };
+
+// Default config for initial average profile (use Learning as baseline)
+const defaultConfig = getPoolConfig(SimulationMode.Learning);
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<User | null>(DEV_USER);
   const [currentStage, setCurrentStage] = useState<AppStage>(AppStage.Welcome);
   const [authError, setAuthError] = useState<string | null>(null);
 
+  const [activePoolConfig, setActivePoolConfig] = useState<PoolConfig | null>(null);
   const [simulationItems, setSimulationItems] = useState<ItemPair[]>([]);
   const [userProfile, setUserProfile] = useState<PersonalityProfile | null>(null);
   const [traitExplanations, setTraitExplanations] = useState<TraitExplanations | null>(null);
@@ -41,32 +46,26 @@ const App: React.FC = () => {
   const [apiKeyMissing, setApiKeyMissing] = useState<boolean>(false);
   const [scoringResults, setScoringResults] = useState<ScoringResults | null>(null);
   const [previousStage, setPreviousStage] = useState<AppStage>(AppStage.Welcome);
-  const [currentAverageProfile, setCurrentAverageProfile] = useState<PersonalityProfile>(AVERAGE_APPLICANT_PROFILE);
+  const [currentAverageProfile, setCurrentAverageProfile] = useState<PersonalityProfile>(defaultConfig.averageApplicantProfile);
   const [allRunsForAdmin, setAllRunsForAdmin] = useState<StoredSimulationRun[]>([]);
 
   useEffect(() => {
-    // Auth disabled — always start as dev user
-    // To re-enable: restore getCurrentUser() check and Auth stage logic
-
     if (!isApiKeyAvailable()) {
       setApiKeyMissing(true);
-      // The warning is already logged by geminiService.ts, but we can log it here too if needed
-      // console.warn(API_KEY_ERROR_MESSAGE); 
     }
-    setSimulationItems(getShuffledItems());
     updateDynamicAverageProfile();
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Run once on mount
+  }, []);
 
   const updateDynamicAverageProfile = useCallback(() => {
-    const dynamicAverage = calculateAverageProfileFromStoredRuns(AVERAGE_APPLICANT_PROFILE);
+    const fallback = activePoolConfig?.averageApplicantProfile ?? defaultConfig.averageApplicantProfile;
+    const dynamicAverage = calculateAverageProfileFromStoredRuns(fallback);
     setCurrentAverageProfile(dynamicAverage);
-  }, []);
+  }, [activePoolConfig]);
 
   // --- Auth Handlers ---
   const handleRegister = async (name: string, email: string, phone: string, accessCode: string, password: string) => {
     setAuthError(null);
-    // Corrected argument order: password first, then accessCode for authService.registerUser
     const result = await registerUser(name, email, phone, password, accessCode);
     if (result.success && result.user) {
       setCurrentUser(result.user);
@@ -95,6 +94,7 @@ const App: React.FC = () => {
     setUserProfile(null);
     setTraitExplanations(null);
     setScoringResults(null);
+    setActivePoolConfig(null);
     setCurrentStage(AppStage.Auth);
     setAuthError(null);
   };
@@ -113,33 +113,33 @@ const App: React.FC = () => {
   };
 
   const handleSimulationSubmit = useCallback(async (choices: UserChoice[]) => {
+    if (!activePoolConfig) return;
+
     setCurrentStage(AppStage.LoadingResults);
     const profile = calculateProfile(choices);
     setUserProfile(profile);
 
-    const results = calculateScoringResults(profile);
+    const results = calculateScoringResults(profile, activePoolConfig);
     setScoringResults(results);
 
-    if (currentUser) { // Save run only if a user is logged in
+    if (currentUser) {
         const newRun: StoredSimulationRun = {
-          id: generateRunId(), // Potentially prefix with user ID if needed for filtering
+          id: generateRunId(),
           timestamp: Date.now(),
           userProfile: profile,
           scoringResults: results,
         };
-        saveSimulationRun(newRun, currentUser.id); // Pass user ID for namespacing if desired
+        saveSimulationRun(newRun, currentUser.id);
         updateDynamicAverageProfile();
     }
 
-
     if (isApiKeyAvailable()) {
       setIsLoadingExplanations(true);
-      const explanations = await getPersonalizedExplanations(profile);
+      const explanations = await getPersonalizedExplanations(profile, activePoolConfig.maxPossibleTraitScore);
       setTraitExplanations(explanations);
       setIsLoadingExplanations(false);
     } else {
-      // Fallback explanations if API key missing
-       const fallbackExplanations: TraitExplanations = {};
+      const fallbackExplanations: TraitExplanations = {};
         Object.values(PersonalityTrait).forEach(trait => {
             fallbackExplanations[trait] = {
                 explanation: `הסבר מותאם אישית באמצעות AI אינו זמין. ${API_KEY_ERROR_MESSAGE}`,
@@ -151,16 +151,25 @@ const App: React.FC = () => {
         setIsLoadingExplanations(false);
     }
     setCurrentStage(AppStage.Results);
-  }, [updateDynamicAverageProfile, currentUser]);
+  }, [updateDynamicAverageProfile, currentUser, activePoolConfig]);
 
-  const startSimulation = () => {
+  const startWithMode = (mode: SimulationMode) => {
     if (!currentUser) { setCurrentStage(AppStage.Auth); return; }
-    setSimulationItems(getShuffledItems());
+    const config = getPoolConfig(mode);
+    setActivePoolConfig(config);
+    const items = drawRandomPairs(mode);
+    setSimulationItems(items);
     setUserProfile(null);
     setTraitExplanations(null);
     setScoringResults(null);
     setPreviousStage(AppStage.Welcome);
     setCurrentStage(AppStage.Simulation);
+  };
+
+  const returnToWelcome = () => {
+    if (!currentUser) { setCurrentStage(AppStage.Auth); return; }
+    setActivePoolConfig(null);
+    setCurrentStage(AppStage.Welcome);
   };
 
   const navigateToEducationalScreen = () => {
@@ -176,44 +185,35 @@ const App: React.FC = () => {
   };
 
   const navigateToAdminScreen = () => {
-    // Potentially add admin role check here if needed in future
     if (!currentUser) { setCurrentStage(AppStage.Auth); return; }
-    setAllRunsForAdmin(getAllSimulationRuns(currentUser.id)); // Pass user ID if runs are namespaced
+    setAllRunsForAdmin(getAllSimulationRuns(currentUser.id));
     setPreviousStage(currentStage);
     setCurrentStage(AppStage.Admin);
   };
-  
+
   const returnToPreviousScreen = () => {
     if (!currentUser && previousStage !== AppStage.Auth) { setCurrentStage(AppStage.Auth); return; }
     setCurrentStage(previousStage);
-  };
-  
-  const returnToWelcomeScreen = () => {
-    if (!currentUser) { setCurrentStage(AppStage.Auth); return; }
-    setCurrentStage(AppStage.Welcome);
   };
 
   const returnToResultsScreen = () => {
     if (!currentUser) { setCurrentStage(AppStage.Auth); return; }
     setCurrentStage(AppStage.Results);
   }
-  
+
   const handleClearAllData = () => {
     if (!currentUser) { setCurrentStage(AppStage.Auth); return; }
-    // Decide if this should be global or per-user. For now, assume global for admin.
-    clearAllSimulationRuns(); // Consider if this needs user ID for namespacing
-    setAllRunsForAdmin([]); 
-    updateDynamicAverageProfile(); 
+    clearAllSimulationRuns();
+    setAllRunsForAdmin([]);
+    updateDynamicAverageProfile();
     alert("כל נתוני הסימולציות נמחקו.");
   };
 
   const renderContent = () => {
-    if (currentStage === AppStage.LoadingResults && !currentUser) { // Initial load before user check
+    if (currentStage === AppStage.LoadingResults && !currentUser) {
         return <LoadingSpinner message="טוען אפליקציה..." />;
     }
     if (!currentUser && currentStage !== AppStage.Auth) {
-        // This case should ideally not be hit if initial useEffect sets stage to Auth.
-        // But as a safeguard:
         return <AuthScreen onLogin={handleLogin} onRegister={handleRegister} authError={authError} />;
     }
 
@@ -235,7 +235,7 @@ const App: React.FC = () => {
                   גלה את פרופיל האישיות שלך, קבל ציון התאמה משוער ותובנות מותאמות אישית.
                 </p>
                 <p className="text-xs text-slate-400 mb-8">
-                  {SIMULATION_ITEMS.length} זוגות | כ-{Math.max(3, Math.round(SIMULATION_ITEMS.length * 10 / 60))} דקות | בחירה כפויה בין שני משפטים
+                  בחר מצב: תרגול (30 זוגות, ~5 דקות) או סימולציה מלאה (120 זוגות, ~20 דקות)
                 </p>
                 {apiKeyMissing && (
                   <div className="mb-6 p-3 bg-amber-50 border border-amber-200 text-amber-700 rounded-lg text-sm">
@@ -244,8 +244,11 @@ const App: React.FC = () => {
                   </div>
                 )}
                 <div className="space-y-3">
-                  <Button onClick={startSimulation} size="lg" variant="primary" className="w-full">
-                    התחל סימולציה
+                  <Button onClick={() => startWithMode(SimulationMode.Learning)} size="lg" variant="secondary" className="w-full">
+                    תרגול ולמידה (30 זוגות)
+                  </Button>
+                  <Button onClick={() => startWithMode(SimulationMode.Simulation)} size="lg" variant="primary" className="w-full">
+                    סימולציה מלאה (120 זוגות)
                   </Button>
                   <Button onClick={navigateToEducationalScreen} size="md" variant="secondary" className="w-full">
                     למד על חמש התכונות הגדולות
@@ -268,7 +271,9 @@ const App: React.FC = () => {
             profile={userProfile}
             explanations={traitExplanations}
             scoringResults={scoringResults}
-            onRetake={startSimulation}
+            maxTraitScore={activePoolConfig?.maxPossibleTraitScore ?? 0}
+            idealDentistProfile={activePoolConfig?.idealDentistProfile ?? defaultConfig.idealDentistProfile}
+            onRetake={returnToWelcome}
             isLoadingExplanations={isLoadingExplanations}
             onNavigateToGuidedReflection={navigateToGuidedReflection}
             averageProfileForDisplay={currentAverageProfile}
@@ -282,8 +287,9 @@ const App: React.FC = () => {
           <GuidedReflectionScreen
             profile={userProfile}
             scoringResults={scoringResults}
+            maxTraitScore={activePoolConfig?.maxPossibleTraitScore ?? 0}
             onBackToResults={returnToResultsScreen}
-            onRetakeSimulation={startSimulation}
+            onRetakeSimulation={returnToWelcome}
           />
         );
       case AppStage.Admin:
@@ -293,13 +299,13 @@ const App: React.FC = () => {
             currentAverageProfile={currentAverageProfile}
             onClearAllData={handleClearAllData}
             onRecalculateAverage={updateDynamicAverageProfile}
-            onBack={returnToWelcomeScreen}
-            refreshRuns={() => setAllRunsForAdmin(getAllSimulationRuns(currentUser?.id))} // Pass user ID
-            currentUser={currentUser} // Pass currentUser to AdminScreen
+            onBack={returnToWelcome}
+            refreshRuns={() => setAllRunsForAdmin(getAllSimulationRuns(currentUser?.id))}
+            currentUser={currentUser}
           />
         );
       default:
-        return <LoadingSpinner message="טוען..." />; // Fallback for undefined states
+        return <LoadingSpinner message="טוען..." />;
     }
   };
 
